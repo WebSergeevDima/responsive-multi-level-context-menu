@@ -4,7 +4,6 @@
   "description": "",
   "main": "script.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "gh-pages -d ./"
   },
   "repository": {
@@ -17,7 +16,7 @@
   "bugs": {
     "url": "https://github.com/WebSergeevDima/ucox-landing/issues"
   },
-  "homepage": "https://github.com/WebSergeevDima/ucox-landing",
+  "homepage": "https://github.com/WebSergeevDima/responsive-multi-level-context-menu",
   "dependencies": {
     "gh-pages": "^5.0.0"
   }
