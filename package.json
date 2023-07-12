@@ -1,5 +1,5 @@
 {
-  "name": "ucox-landing",
+  "name": "responsive-multi-level-context-menu",
   "version": "1.0.0",
   "description": "",
   "main": "script.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/WebSergeevDima/ucox-landing.git"
+    "url": "git+https://github.com/WebSergeevDima/responsive-multi-level-context-menu.git"
   },
   "keywords": [],
   "author": "",
