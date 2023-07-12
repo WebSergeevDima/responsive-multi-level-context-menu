@@ -27,11 +27,16 @@ p, h1, h2, h3, h4, h5, h6 {
     overflow-wrap: break-word;
 }
 
+h1 {
+    text-align: center;
+    margin: 20px 0;
+}
+
 #contextBlock {
     background: cadetblue;
-    width: 90vw;
-    height: 90vh;
-    margin: 5vh 0 0 5vw;
+    width: 90%;
+    height: calc(100vh - 120px);
+    margin: 0 auto;
 }
 
 .js-context-menu {

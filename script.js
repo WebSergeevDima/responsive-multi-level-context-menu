@@ -65,10 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         contextMenu.classList.add('js-context-menu');
 
-        const clearClasses = () => {
-
-        }
-
         const getWindowInners = () => {
             const windowInnerWidth = window.innerWidth;
             const windowInnerHeight = window.innerHeight;
@@ -90,8 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 result.y = y - contextMenu.offsetHeight;
             }
 
-            console.log('result', result);
-
             return result;
         }
 
@@ -99,8 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
             let result = {contextMenu, x, y};
             let maxRight = config.windowInnerWidth - (config.contextMenuWidth * 2);
             let maxBottom = config.windowInnerHeight - contextMenu.offsetHeight;
-
-            console.log('! maxRight: ', config.windowInnerWidth, config.contextMenuWidth, maxRight, x);
 
             if(maxRight < x) {
                 result.x = 0 + -config.contextMenuWidth;
@@ -113,10 +105,6 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 result.y = 0;
             }
-
-
-            console.log('YYYYYY: ', contextMenu.offsetHeight);
-            console.log('result', result);
 
             return result;
         }
@@ -143,43 +131,27 @@ document.addEventListener('DOMContentLoaded', () => {
         const x = e.clientX; // получаем координату X мыши
         const y = e.clientY; // получаем координату Y мыши
 
-
         const contextMenuContainer = getPositions({contextMenu, x, y});
 
         contextMenu.style.top = `${contextMenuContainer.y}px`;
         contextMenu.style.left = `${contextMenuContainer.x}px`;
 
         contextMenu.addEventListener('mouseover', (e) => {
-            console.log(e.target);
-
-            [...contextMenu.querySelectorAll('.active')].forEach(item => {
-                item.classList.remove('active');
-            });
 
             if(e.target.classList.contains('js-context-menu__link') && e.target.closest('li') && e.target.closest('li').querySelector('ul')) {
-               // e.target.closest('li').classList.add('active');
 
                 clearUlShow();
 
                 const subMenu = e.target.closest('li').querySelector('ul');
 
-                console.log('?????: ', subMenu.offsetHeight);
-
                 subMenu.classList.add('show');
 
-
                 let coord = e.target.getBoundingClientRect();
-                console.log('Левый край '+coord.left);
-                console.log('Верхний край '+coord.top);
 
                 const contextMenuContainer = getSubPositions({contextMenu: subMenu, x: coord.left, y: coord.top});
 
                 subMenu.style.top = `${contextMenuContainer.y}px`;
                 subMenu.style.left = `${contextMenuContainer.x}px`;
-
-                //const contextMenuContainer = getPositions({subMenu, x: coord.left, y: coord.top});
-
-                //console.log('contextMenuContainer:::: SUB: ', contextMenuContainer);
 
             }
         }, false);
