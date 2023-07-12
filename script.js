@@ -11,7 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     <li><a href="#" class="js-context-menu__link">Меню2 1</a></li>
                     <li><a href="#" class="js-context-menu__link">Меню2 2</a></li>
                     <li><a href="#" class="js-context-menu__link">Меню2 3</a></li>
-                    <li><a href="#" class="js-context-menu__link">Меню2 4</a></li>
+                    <li>
+                    <a href="#" class="js-context-menu__link">Меню2 4</a>
+                     <ul>
+                            <li><a href="#" class="js-context-menu__link">Меню2 1</a></li>
+                            <li><a href="#" class="js-context-menu__link">Меню2 2</a></li>
+                            <li><a href="#" class="js-context-menu__link">Меню2 3</a></li>
+                            <li><a href="#" class="js-context-menu__link">Меню2 4</a></li>
+                    </ul>
+                    </li>
             </ul>
         </li>
         <li><a href="#" class="js-context-menu__link">Меню 5</a></li>
@@ -21,7 +29,24 @@ document.addEventListener('DOMContentLoaded', () => {
                     <li><a href="#" class="js-context-menu__link">Меню6 1</a></li>
                     <li><a href="#" class="js-context-menu__link">Меню6 2</a></li>
                     <li><a href="#" class="js-context-menu__link">Меню6 3</a></li>
+                    <li><a href="#" class="js-context-menu__link">Меню6 4</a>
+                    
+                     <ul>
+                    <li><a href="#" class="js-context-menu__link">Меню6 1</a>
+                             <ul>
+                            <li><a href="#" class="js-context-menu__link">Меню6 1</a></li>
+                            <li><a href="#" class="js-context-menu__link">Меню6 2</a></li>
+                            <li><a href="#" class="js-context-menu__link">Меню6 3</a></li>
+                            <li><a href="#" class="js-context-menu__link">Меню6 4</a></li>
+                    </ul>
+                    
+                    
+                    </li>
+                    <li><a href="#" class="js-context-menu__link">Меню6 2</a></li>
+                    <li><a href="#" class="js-context-menu__link">Меню6 3</a></li>
                     <li><a href="#" class="js-context-menu__link">Меню6 4</a></li>
+            </ul>
+                    </li>
             </ul>
         </li>
 </ul>
@@ -70,7 +95,40 @@ document.addEventListener('DOMContentLoaded', () => {
             return result;
         }
 
+        const getSubPositions = ({contextMenu, x, y}) => {
+            let result = {contextMenu, x, y};
+            let maxRight = config.windowInnerWidth - (config.contextMenuWidth * 2);
+            let maxBottom = config.windowInnerHeight - contextMenu.offsetHeight;
+
+            console.log('! maxRight: ', config.windowInnerWidth, config.contextMenuWidth, maxRight, x);
+
+            if(maxRight < x) {
+                result.x = 0 + -config.contextMenuWidth;
+            } else {
+                result.x = config.contextMenuWidth - 2;
+            }
+
+            if(maxBottom < y) {
+                result.y = -contextMenu.offsetHeight + 32;
+            } else {
+                result.y = 0;
+            }
+
+
+            console.log('YYYYYY: ', contextMenu.offsetHeight);
+            console.log('result', result);
+
+            return result;
+        }
+
+        const clearUlShow = () => {
+            [...contextMenu.querySelectorAll('.show')].forEach(item => {
+                item.classList.remove('show');
+            });
+        }
+
         getWindowInners();
+        clearUlShow();
 
         if(document.querySelector('.js-context-menu')) {
             document.querySelector('.js-context-menu').remove();
@@ -98,21 +156,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 item.classList.remove('active');
             });
 
-            [...contextMenu.querySelectorAll('.show')].forEach(item => {
-                item.classList.remove('show');
-            });
-
             if(e.target.classList.contains('js-context-menu__link') && e.target.closest('li') && e.target.closest('li').querySelector('ul')) {
                // e.target.closest('li').classList.add('active');
 
+                clearUlShow();
+
                 const subMenu = e.target.closest('li').querySelector('ul');
 
+                console.log('?????: ', subMenu.offsetHeight);
 
                 subMenu.classList.add('show');
+
 
                 let coord = e.target.getBoundingClientRect();
                 console.log('Левый край '+coord.left);
                 console.log('Верхний край '+coord.top);
+
+                const contextMenuContainer = getSubPositions({contextMenu: subMenu, x: coord.left, y: coord.top});
+
+                subMenu.style.top = `${contextMenuContainer.y}px`;
+                subMenu.style.left = `${contextMenuContainer.x}px`;
+
+                //const contextMenuContainer = getPositions({subMenu, x: coord.left, y: coord.top});
+
+                //console.log('contextMenuContainer:::: SUB: ', contextMenuContainer);
 
             }
         }, false);
